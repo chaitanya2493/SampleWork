@@ -1,0 +1,9 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xmime="http://www.w3.org/2005/05/xmlmime">
+	<xs:complexType name="ImageDepot">
+		<xs:sequence>
+			<xs:element name="name" type="xs:string" minOccurs="0" />
+			<xs:element name="imageData" type="xs:base64Binary" xmime:expectedContentTypes="application/pdf" />
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>
