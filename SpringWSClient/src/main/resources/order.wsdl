@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch="http://www.springwssample.org/types" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="http://www.springwssample.org/types" targetNamespace="http://www.springwssample.org/types">
+  <wsdl:types>
+    <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" elementFormDefault="qualified" targetNamespace="http://www.springwssample.org/types">
+	<element name="orderRequest">
+		<complexType>
+			<sequence>
+				<element name="item" type="string"/>
+				<element name="quantity" type="integer"/>
+				<element name="city" type="string"/>
+				<element name="country" type="string"/>
+			</sequence>
+		</complexType>
+	</element>
+	<element name="orderResponse">
+		<complexType>
+			<sequence>
+				<element name="item" type="string"/>
+				<element name="quantity" type="string"/>
+				<element name="city" type="string"/>
+				<element name="country" type="string"/>
+				<element name="price" type="double"/>
+				<element name="isDeliver" type="boolean"/>
+			</sequence>
+		</complexType>
+	</element>
+	<element name="downloadDocumentRequest">
+		<complexType>
+			<sequence>
+				<element name="filename" type="string"/>
+			</sequence>
+		</complexType>
+	</element>
+	<element name="downloadDocumentResponse">
+		<complexType>
+			<sequence>
+				<element name="documentDetails" type="base64Binary" xmime:expectedContentTypes="application/pdf"/>
+			</sequence>
+		</complexType>
+	</element>
+</schema>
+  </wsdl:types>
+  <wsdl:message name="downloadDocumentResponse">
+    <wsdl:part element="tns:downloadDocumentResponse" name="downloadDocumentResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="downloadDocumentRequest">
+    <wsdl:part element="tns:downloadDocumentRequest" name="downloadDocumentRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="orderRequest">
+    <wsdl:part element="tns:orderRequest" name="orderRequest">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="orderResponse">
+    <wsdl:part element="tns:orderResponse" name="orderResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="Order">
+    <wsdl:operation name="downloadDocument">
+      <wsdl:input message="tns:downloadDocumentRequest" name="downloadDocumentRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:downloadDocumentResponse" name="downloadDocumentResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="order">
+      <wsdl:input message="tns:orderRequest" name="orderRequest">
+    </wsdl:input>
+      <wsdl:output message="tns:orderResponse" name="orderResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="OrderSoap11" type="tns:Order">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="downloadDocument">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="downloadDocumentRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="downloadDocumentResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="order">
+      <soap:operation soapAction=""/>
+      <wsdl:input name="orderRequest">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="orderResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="OrderService">
+    <wsdl:port binding="tns:OrderSoap11" name="OrderSoap11">
+      <soap:address location="http://localhost:8080/SpringWS/orderservices/order.wsdl"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

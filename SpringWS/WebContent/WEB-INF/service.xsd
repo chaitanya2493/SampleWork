@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.springwssample.org/types"
+	xmlns:tns="http://www.springwssample.org/types" elementFormDefault="qualified"
+	xmlns:xmime="http://www.w3.org/2005/05/xmlmime">
+	<element name="orderRequest">
+		<complexType>
+			<sequence>
+				<element name="item" type="string" />
+				<element name="quantity" type="integer" />
+				<element name="city" type="string" />
+				<element name="country" type="string" />
+			</sequence>
+		</complexType>
+	</element>
+	<element name="orderResponse">
+		<complexType>
+			<sequence>
+				<element name="item" type="string" />
+				<element name="quantity" type="string" />
+				<element name="city" type="string" />
+				<element name="country" type="string" />
+				<element name="price" type="double" />
+				<element name="isDeliver" type="boolean" />
+			</sequence>
+		</complexType>
+	</element>
+	<element name="downloadDocumentRequest">
+		<complexType>
+			<sequence>
+				<element name="filename" type="string" />
+			</sequence>
+		</complexType>
+	</element>
+	<element name="downloadDocumentResponse">
+		<complexType>
+			<sequence>
+				<element name="documentDetails" xmime:expectedContentTypes="application/pdf"
+					type="base64Binary" />
+			</sequence>
+		</complexType>
+	</element>
+</schema>
