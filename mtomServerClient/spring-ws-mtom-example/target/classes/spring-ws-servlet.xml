@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:sws="http://www.springframework.org/schema/web-services"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+                           http://www.springframework.org/schema/web-services http://www.springframework.org/schema/web-services/web-services-2.0.xsd">
+
+	<context:component-scan base-package="hu.vanio.springwsmtom" />
+
+	<beans:bean id="marshaller"
+		class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+		<beans:property name="contextPath" value="hu.vanio.springwsmtom.wstypes" />
+		<beans:property name="mtomEnabled" value="true" />
+	</beans:bean>
+
+	<beans:bean id="methodProcessor"
+		class="org.springframework.ws.server.endpoint.adapter.method.MarshallingPayloadMethodProcessor">
+		<beans:constructor-arg ref="marshaller" />
+	</beans:bean>
+
+	<beans:bean
+		class="org.springframework.ws.server.endpoint.mapping.PayloadRootAnnotationMethodEndpointMapping" />
+
+	<beans:bean
+		class="org.springframework.ws.server.endpoint.adapter.DefaultMethodEndpointAdapter">
+		<beans:property name="methodArgumentResolvers" ref="methodProcessor" />
+		<beans:property name="methodReturnValueHandlers" ref="methodProcessor" />
+	</beans:bean>
+
+	<sws:static-wsdl id="contentStore" location="classpath:/contentStore.wsdl" />
+
+</beans:beans>
+
